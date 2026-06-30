@@ -57,7 +57,7 @@ Download several URLs:
 ```bash
 msd -o downloads \
   'https://pixeldrain.com/l/<id>' \
-  'https://filester.me/f/<slug>' \
+  'https://filester.si/f/<slug>' \
   'https://coomerfans.com/u/onlyfans/<id>/<name>'
 ```
 

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	neturl "net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -22,7 +23,7 @@ const (
 	userAgent      = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 )
 
-var albumPattern = regexp.MustCompile(`filester\.me/f/([a-zA-Z0-9_-]+)`)
+var albumPattern = regexp.MustCompile(`(?:https?://)?(?:www\.)?(filester\.(?:me|si))/f/([a-zA-Z0-9_-]+)`)
 
 func init() { site.Register(&Filester{}) }
 
@@ -43,13 +44,15 @@ func (f *Filester) Resolve(ctx context.Context, url string, _ string) (*site.Alb
 	if m == nil {
 		return nil, fmt.Errorf("filester: %w: %s", site.ErrNotFound, url)
 	}
-	slug := m[1]
+	host := m[1]
+	slug := m[2]
+	baseURL := f.baseURLForHost(host)
 
 	album := &site.Album{ID: slug}
 
 	for page := 1; ; page++ {
-		pageURL := fmt.Sprintf("%s/f/%s?page=%d", f.baseURL(), slug, page)
-		title, files, hasNext, err := f.parsePage(ctx, pageURL)
+		pageURL := fmt.Sprintf("%s/f/%s?page=%d", baseURL, slug, page)
+		title, files, hasNext, err := f.parsePage(ctx, pageURL, baseURL, page)
 		if err != nil {
 			return nil, err
 		}
@@ -70,13 +73,13 @@ func (f *Filester) Resolve(ctx context.Context, url string, _ string) (*site.Alb
 	return album, nil
 }
 
-func (f *Filester) parsePage(ctx context.Context, pageURL string) (string, []site.File, bool, error) {
+func (f *Filester) parsePage(ctx context.Context, pageURL string, baseURL string, page int) (string, []site.File, bool, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, pageURL, nil)
 	if err != nil {
 		return "", nil, false, err
 	}
 	req.Header.Set("User-Agent", userAgent)
-	req.Header.Set("Referer", f.baseURL()+"/")
+	req.Header.Set("Referer", baseURL+"/")
 
 	resp, err := f.httpClient().Do(req)
 	if err != nil {
@@ -102,13 +105,13 @@ func (f *Filester) parsePage(ctx context.Context, pageURL string) (string, []sit
 	}
 
 	title := strings.TrimSpace(doc.Find(".folder-title").First().Text())
-	files, hasNext := extractFiles(doc)
+	files, hasNext := extractFiles(doc, page)
 	return title, files, hasNext, nil
 }
 
 var slugPattern = regexp.MustCompile(`/d/([a-zA-Z0-9_-]+)`)
 
-func extractFiles(doc *goquery.Document) ([]site.File, bool) {
+func extractFiles(doc *goquery.Document, currentPage int) ([]site.File, bool) {
 	var files []site.File
 
 	doc.Find(".file-item[data-name]").Each(func(_ int, s *goquery.Selection) {
@@ -140,12 +143,29 @@ func extractFiles(doc *goquery.Document) ([]site.File, bool) {
 	hasNext := false
 	doc.Find("a[href]").Each(func(_ int, s *goquery.Selection) {
 		href, _ := s.Attr("href")
-		if strings.Contains(href, "?page=") {
+		page, ok := pageFromHref(href)
+		if ok && page > currentPage {
 			hasNext = true
 		}
 	})
 
 	return files, hasNext
+}
+
+func pageFromHref(href string) (int, bool) {
+	u, err := neturl.Parse(href)
+	if err != nil {
+		return 0, false
+	}
+	page := u.Query().Get("page")
+	if page == "" {
+		return 0, false
+	}
+	n, err := strconv.Atoi(page)
+	if err != nil {
+		return 0, false
+	}
+	return n, true
 }
 
 func extractSlug(s string) string {
@@ -218,6 +238,16 @@ func (f *Filester) httpClient() *http.Client {
 func (f *Filester) baseURL() string {
 	if f.BaseURL != "" {
 		return f.BaseURL
+	}
+	return defaultBaseURL
+}
+
+func (f *Filester) baseURLForHost(host string) string {
+	if f.BaseURL != "" {
+		return f.BaseURL
+	}
+	if host != "" {
+		return "https://" + host
 	}
 	return defaultBaseURL
 }

@@ -9,7 +9,7 @@ This page lists the URL patterns MSD currently recognizes and the important beha
 | Bunkr | `bunkr` | `/a/<id>`, `/f/<id>`, `/i/<id>`, `/v/<id>` on supported Bunkr hosts |
 | CoomerFans | `coomerfans` | `/u/<service>/<id>/<name>`, `/p/<post>/<id>/<service>` |
 | Cyberdrop | `cyberdrop` | `/f/<id>` |
-| Filester | `filester` | `/f/<slug>` |
+| Filester | `filester` | `/f/<slug>` on `filester.me` and `filester.si` |
 | Gofile | `gofile` | `/d/<id>` |
 | Instagram | `instagram` | `/<username>`, `/reel/<shortcode>` |
 | Kemono/Pawchive | `kemono` | `/<service>/user/<id>` |
@@ -69,6 +69,7 @@ Example:
 
 ```text
 https://filester.me/f/<slug>
+https://filester.si/f/<slug>
 ```
 
 Notes:

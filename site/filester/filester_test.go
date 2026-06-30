@@ -18,10 +18,12 @@ func TestMatch(t *testing.T) {
 		want bool
 	}{
 		{"https://filester.me/f/abc123", true},
+		{"https://filester.si/f/abc123", true},
+		{"https://www.filester.si/f/abc123", true},
 		{"https://filester.me/f/3de7fbc9228bb07f", true},
 		{"https://filester.me/f/slug-with-dashes", true},
 		{"https://filester.me/f/slug_with_underscores", true},
-		{"https://filester.me/d/abc123", false},
+		{"https://filester.si/d/abc123", false},
 		{"https://other.com/f/abc123", false},
 		{"not a url", false},
 	}
@@ -63,7 +65,7 @@ func TestResolve_SinglePage(t *testing.T) {
 	defer ts.Close()
 
 	f := &Filester{HTTPClient: ts.Client(), BaseURL: ts.URL}
-	album, err := f.Resolve(context.Background(), "https://filester.me/f/testalbum", "")
+	album, err := f.Resolve(context.Background(), "https://filester.si/f/testalbum", "")
 	if err != nil {
 		t.Fatalf("Resolve: %v", err)
 	}
