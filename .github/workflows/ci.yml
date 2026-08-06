@@ -22,10 +22,14 @@ jobs:
     with:
       binary-name: msd
       main-package: ./cmd/msd
-      # msd's site handlers parse attacker-influenced HTML and build filesystem
-      # paths, so the stricter checks are worth turning on as test support
-      # lands. offline-isolation is the notable one still off: it catches unit
-      # tests that quietly reach a live site and pass while the handler under
-      # them is broken.
       vet-integration-tag: true
       check-dockerfile-go-version: true
+      # Every package here is a scraper, so the failure that matters most is a
+      # unit test quietly fetching the live site and grading real markup
+      # instead of its own fixture — it passes while the parser is broken.
+      # Verified passing with no network before enabling.
+      offline-isolation: true
+      # internal/fsutil/sanitize.go reasons about Windows reserved names and
+      # the 255-byte cap, and the resume path relies on rename semantics that
+      # differ there — all of it currently only ever executed on Linux.
+      platform-tests: true
