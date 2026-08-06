@@ -125,10 +125,16 @@ func ExpandPath(path string) string {
 		}
 	}
 
-	return os.Expand(path, func(name string) string {
+	expanded := os.Expand(path, func(name string) string {
 		if name == "XDG_DOWNLOAD_DIR" {
 			return defaultDownloadDir()
 		}
 		return os.Getenv(name)
 	})
+
+	// os.Expand is plain string substitution, so a config value written the
+	// natural way — "$HOME/downloads" — comes back as `C:\Users\x/downloads`
+	// on Windows. Clean normalises the separator (and is a no-op elsewhere
+	// beyond tidying the path, which the ~ branches above already do via Join).
+	return filepath.Clean(expanded)
 }
