@@ -15,8 +15,8 @@ import (
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/time/rate"
 
-	"github.com/Wasylq/MSD/internal/fsutil"
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/internal/fsutil"
+	"github.com/Anastylosis/MSD/site"
 )
 
 type Engine struct {

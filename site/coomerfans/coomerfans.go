@@ -12,7 +12,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 const (

@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 type RetryPolicy struct {

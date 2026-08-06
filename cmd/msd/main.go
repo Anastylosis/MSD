@@ -12,20 +12,20 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/Wasylq/MSD/engine"
-	"github.com/Wasylq/MSD/internal/config"
-	"github.com/Wasylq/MSD/site"
-	sitegofile "github.com/Wasylq/MSD/site/gofile"
-	sitekemono "github.com/Wasylq/MSD/site/kemono"
+	"github.com/Anastylosis/MSD/engine"
+	"github.com/Anastylosis/MSD/internal/config"
+	"github.com/Anastylosis/MSD/site"
+	sitegofile "github.com/Anastylosis/MSD/site/gofile"
+	sitekemono "github.com/Anastylosis/MSD/site/kemono"
 
-	_ "github.com/Wasylq/MSD/site/bunkr"
-	_ "github.com/Wasylq/MSD/site/coomerfans"
-	_ "github.com/Wasylq/MSD/site/cyberdrop"
-	_ "github.com/Wasylq/MSD/site/filester"
-	_ "github.com/Wasylq/MSD/site/instagram"
-	_ "github.com/Wasylq/MSD/site/pixeldrain"
-	_ "github.com/Wasylq/MSD/site/redgifs"
-	_ "github.com/Wasylq/MSD/site/turbo"
+	_ "github.com/Anastylosis/MSD/site/bunkr"
+	_ "github.com/Anastylosis/MSD/site/coomerfans"
+	_ "github.com/Anastylosis/MSD/site/cyberdrop"
+	_ "github.com/Anastylosis/MSD/site/filester"
+	_ "github.com/Anastylosis/MSD/site/instagram"
+	_ "github.com/Anastylosis/MSD/site/pixeldrain"
+	_ "github.com/Anastylosis/MSD/site/redgifs"
+	_ "github.com/Anastylosis/MSD/site/turbo"
 )
 
 var (

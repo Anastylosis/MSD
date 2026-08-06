@@ -1,4 +1,4 @@
-module github.com/Wasylq/MSD
+module github.com/Anastylosis/MSD
 
 go 1.26.3
 

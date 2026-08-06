@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 func (e *Engine) downloadFile(ctx context.Context, s site.Site, file site.File, dir string) error {

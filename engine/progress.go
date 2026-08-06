@@ -1,6 +1,6 @@
 package engine
 
-import "github.com/Wasylq/MSD/site"
+import "github.com/Anastylosis/MSD/site"
 
 type ProgressReporter interface {
 	OnFileStart(file site.File)

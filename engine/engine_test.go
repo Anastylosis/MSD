@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 func newMultiFileServer(files map[string]string) *httptest.Server {

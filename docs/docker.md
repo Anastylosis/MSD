@@ -6,7 +6,7 @@ MSD ships as a container image on GitHub Container Registry.
 
 | Registry | Path |
 |---|---|
-| GHCR | `ghcr.io/wasylq/msd` |
+| GHCR | `ghcr.io/anastylosis/msd` |
 
 Architectures:
 
@@ -30,13 +30,13 @@ Pin to a version tag for repeatable systems.
 ## Quick Start
 
 ```bash
-docker run --rm ghcr.io/wasylq/msd:latest --help
+docker run --rm ghcr.io/anastylosis/msd:latest --help
 ```
 
 The image entrypoint is `msd`, so pass normal CLI args directly:
 
 ```bash
-docker run --rm ghcr.io/wasylq/msd:latest --dry-run 'https://pixeldrain.com/l/<id>'
+docker run --rm ghcr.io/anastylosis/msd:latest --dry-run 'https://pixeldrain.com/l/<id>'
 ```
 
 ## Downloads Volume
@@ -50,7 +50,7 @@ docker run --rm \
   --user "$(id -u):$(id -g)" \
   -v "$PWD/downloads:/data" \
   -w /data \
-  ghcr.io/wasylq/msd:latest \
+  ghcr.io/anastylosis/msd:latest \
   'https://pixeldrain.com/l/<id>'
 ```
 
@@ -72,7 +72,7 @@ docker run --rm \
   -v "$PWD/config:/config" \
   -v "$PWD/downloads:/data" \
   -w /data \
-  ghcr.io/wasylq/msd:latest \
+  ghcr.io/anastylosis/msd:latest \
   'https://gofile.io/d/<id>'
 ```
 
@@ -92,7 +92,7 @@ docker run --rm \
   -e MSD_GOFILE_TOKEN \
   -v "$PWD/downloads:/data" \
   -w /data \
-  ghcr.io/wasylq/msd:latest \
+  ghcr.io/anastylosis/msd:latest \
   'https://gofile.io/d/<id>'
 ```
 

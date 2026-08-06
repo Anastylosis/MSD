@@ -1,8 +1,8 @@
 # MSD - Multi Site Downloader
 
-[![CI](https://github.com/Wasylq/MSD/actions/workflows/ci.yml/badge.svg)](https://github.com/Wasylq/MSD/actions/workflows/ci.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/Wasylq/MSD)](https://goreportcard.com/report/github.com/Wasylq/MSD)
-[![codecov](https://codecov.io/gh/Wasylq/MSD/branch/master/graph/badge.svg?token=JZM3FGDXL0)](https://codecov.io/gh/Wasylq/MSD)
+[![CI](https://github.com/Anastylosis/MSD/actions/workflows/ci.yml/badge.svg)](https://github.com/Anastylosis/MSD/actions/workflows/ci.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Anastylosis/MSD)](https://goreportcard.com/report/github.com/Anastylosis/MSD)
+[![codecov](https://codecov.io/gh/Anastylosis/MSD/branch/master/graph/badge.svg?token=JZM3FGDXL0)](https://codecov.io/gh/Anastylosis/MSD)
 
 MSD resolves supported album, folder, creator, and post URLs into downloadable files, then downloads them concurrently with resume support. It is meant for public links first, while still allowing optional site credentials when a site blocks guest access or requires an account token.
 
@@ -29,7 +29,7 @@ Pick one install route. Pre-built release binaries are simplest, packages are be
 
 ### Option 1: pre-built binary
 
-Download the archive for your platform from the [latest release](https://github.com/Wasylq/MSD/releases/latest), extract it, and put `msd` on your `PATH`.
+Download the archive for your platform from the [latest release](https://github.com/Anastylosis/MSD/releases/latest), extract it, and put `msd` on your `PATH`.
 
 Asset names follow this pattern:
 
@@ -49,10 +49,10 @@ Release builds currently target:
 Linux example:
 
 ```bash
-VERSION=$(curl -sIL -o /dev/null -w '%{url_effective}' https://github.com/Wasylq/MSD/releases/latest | sed 's|.*/||')
+VERSION=$(curl -sIL -o /dev/null -w '%{url_effective}' https://github.com/Anastylosis/MSD/releases/latest | sed 's|.*/||')
 ARCH=amd64
 
-curl -LO "https://github.com/Wasylq/MSD/releases/download/${VERSION}/msd-${VERSION}-linux-${ARCH}.tar.gz"
+curl -LO "https://github.com/Anastylosis/MSD/releases/download/${VERSION}/msd-${VERSION}-linux-${ARCH}.tar.gz"
 tar xzf "msd-${VERSION}-linux-${ARCH}.tar.gz"
 sudo install -m 0755 msd /usr/local/bin/msd
 msd --version
@@ -61,10 +61,10 @@ msd --version
 macOS example:
 
 ```bash
-VERSION=$(curl -sIL -o /dev/null -w '%{url_effective}' https://github.com/Wasylq/MSD/releases/latest | sed 's|.*/||')
+VERSION=$(curl -sIL -o /dev/null -w '%{url_effective}' https://github.com/Anastylosis/MSD/releases/latest | sed 's|.*/||')
 ARCH=arm64    # use amd64 for Intel Macs
 
-curl -LO "https://github.com/Wasylq/MSD/releases/download/${VERSION}/msd-${VERSION}-darwin-${ARCH}.tar.gz"
+curl -LO "https://github.com/Anastylosis/MSD/releases/download/${VERSION}/msd-${VERSION}-darwin-${ARCH}.tar.gz"
 tar xzf "msd-${VERSION}-darwin-${ARCH}.tar.gz"
 sudo install -m 0755 msd /usr/local/bin/msd
 msd --version
@@ -73,9 +73,9 @@ msd --version
 Windows PowerShell example:
 
 ```powershell
-$Version = (Invoke-RestMethod -Uri "https://api.github.com/repos/Wasylq/MSD/releases/latest").tag_name
+$Version = (Invoke-RestMethod -Uri "https://api.github.com/repos/Anastylosis/MSD/releases/latest").tag_name
 
-Invoke-WebRequest -Uri "https://github.com/Wasylq/MSD/releases/download/$Version/msd-$Version-windows-amd64.zip" -OutFile msd.zip
+Invoke-WebRequest -Uri "https://github.com/Anastylosis/MSD/releases/download/$Version/msd-$Version-windows-amd64.zip" -OutFile msd.zip
 Expand-Archive -Path msd.zip -DestinationPath .
 
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\bin" | Out-Null
@@ -94,16 +94,16 @@ msd --version
 Each tagged release publishes `.deb` and `.rpm` packages.
 
 ```bash
-TAG=$(curl -sIL -o /dev/null -w '%{url_effective}' https://github.com/Wasylq/MSD/releases/latest | sed 's|.*/||')
+TAG=$(curl -sIL -o /dev/null -w '%{url_effective}' https://github.com/Anastylosis/MSD/releases/latest | sed 's|.*/||')
 VERSION=${TAG#v}
 ARCH=amd64
 
 # Debian / Ubuntu
-curl -LO "https://github.com/Wasylq/MSD/releases/download/${TAG}/msd_${VERSION}_${ARCH}.deb"
+curl -LO "https://github.com/Anastylosis/MSD/releases/download/${TAG}/msd_${VERSION}_${ARCH}.deb"
 sudo dpkg -i "msd_${VERSION}_${ARCH}.deb"
 
 # Fedora / RHEL
-curl -LO "https://github.com/Wasylq/MSD/releases/download/${TAG}/msd-${VERSION}-1.x86_64.rpm"
+curl -LO "https://github.com/Anastylosis/MSD/releases/download/${TAG}/msd-${VERSION}-1.x86_64.rpm"
 sudo rpm -i "msd-${VERSION}-1.x86_64.rpm"
 ```
 
@@ -116,8 +116,8 @@ yay -S msd
 ### Option 3: Docker
 
 ```bash
-docker pull ghcr.io/wasylq/msd:latest
-docker run --rm ghcr.io/wasylq/msd:latest --help
+docker pull ghcr.io/anastylosis/msd:latest
+docker run --rm ghcr.io/anastylosis/msd:latest --help
 ```
 
 For real downloads, mount an output directory:
@@ -127,7 +127,7 @@ docker run --rm \
   --user "$(id -u):$(id -g)" \
   -v "$PWD/downloads:/data" \
   -w /data \
-  ghcr.io/wasylq/msd:latest \
+  ghcr.io/anastylosis/msd:latest \
   'https://pixeldrain.com/l/<id>'
 ```
 
@@ -138,7 +138,7 @@ See [docs/docker.md](docs/docker.md) for config mounts, credentials, image tags,
 Requires Go 1.26.3 or newer, matching the `go` directive in [go.mod](go.mod).
 
 ```bash
-git clone https://github.com/Wasylq/MSD
+git clone https://github.com/Anastylosis/MSD
 cd MSD
 make build
 ./msd --version
@@ -147,7 +147,7 @@ make build
 Or install directly:
 
 ```bash
-go install github.com/Wasylq/MSD/cmd/msd@latest
+go install github.com/Anastylosis/MSD/cmd/msd@latest
 ```
 
 ## Quick Start

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 const testAlbumURL = "https://gofile.io/d/5cXXCq"

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 func TestRetryPolicy_SucceedsImmediately(t *testing.T) {

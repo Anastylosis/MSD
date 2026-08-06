@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 const (

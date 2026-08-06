@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 func newTestServer(content map[string]string) *httptest.Server {

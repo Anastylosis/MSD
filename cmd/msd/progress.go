@@ -7,7 +7,7 @@ import (
 
 	"github.com/schollz/progressbar/v3"
 
-	"github.com/Wasylq/MSD/site"
+	"github.com/Anastylosis/MSD/site"
 )
 
 type progressReporter struct {
