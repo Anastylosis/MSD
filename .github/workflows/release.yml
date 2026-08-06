@@ -67,7 +67,7 @@ jobs:
 
         Or pull the Docker image:
         ```sh
-        docker pull ghcr.io/anastylosis/msd:${{ github.ref_name }}
+        docker pull ghcr.io/anastylosis/msd:{{version}}
         ```
 
   # Gated behind the release job, so no image lands on GHCR unless the manual
