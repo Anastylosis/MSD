@@ -18,6 +18,9 @@ jobs:
     permissions:
       contents: read
       checks: write
+      # Codecov uploads authenticate with an OIDC token. A reusable workflow
+      # cannot grant itself more than the caller holds, so it has to be here.
+      id-token: write
     secrets: inherit
     with:
       binary-name: msd
