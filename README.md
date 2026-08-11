@@ -281,3 +281,9 @@ Gofile live smoke tests may require `MSD_GOFILE_TOKEN`, `GOFILE_TOKEN`, or `site
 **Rate limited**: wait and retry with lower concurrency or a longer request delay.
 
 **Site structure changed**: the target site changed its HTML/API. Run with `-d` and open an issue with the URL shape and error.
+
+## License
+
+Copyright (C) 2026 Wasylq
+
+[GPL-3.0-only](LICENSE).

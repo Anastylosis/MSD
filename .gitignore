@@ -43,3 +43,7 @@ dist/
 .vscode/
 
 downloads/
+
+# Local config — holds API keys and site credentials, never commit
+/config.yaml
+/config.yml
