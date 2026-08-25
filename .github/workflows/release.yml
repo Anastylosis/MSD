@@ -31,6 +31,18 @@ jobs:
       aur-commit-email: wasylq@protonmail.com
       environment-name: manual-smoke-gate
       environment-url: https://github.com/Anastylosis/MSD/blob/master/CONTRIBUTING.md#cutting-a-release
+      pre-release-checklist: |
+        - [ ] `go test -tags=integration ./site/...` passed locally — **EVERY**
+              site handler, not just the one you changed. CI cannot run these:
+              they fetch live sites.
+        - [ ] Any handler whose site changed markup this cycle re-checked by hand.
+        - [ ] Release notes describe the user-visible changes.
+
+        Long form: CONTRIBUTING.md → "Cutting a release".
+      pre-release-notice: >-
+        I ran the FULL live-site integration suite locally before approving
+        (`go test -tags=integration ./site/...`, every handler) and every test
+        passed. I reviewed the release notes.
       docker-image: ghcr.io/anastylosis/msd
       install-instructions: |
         Download the binary for your platform, extract, and place it on your PATH:
