@@ -60,3 +60,41 @@ The handler should return typed errors from `site/site.go` whenever possible:
 - Keep site-specific flags rare. Prefer config/env vars for credentials.
 - `--dry-run` must resolve metadata only and never create downloads.
 - Debug logging goes to stderr and should not interfere with stdout usage.
+
+## Cutting a release
+
+Releases are tagged with `vMAJOR.MINOR.PATCH`. Pushing the tag triggers `.github/workflows/release.yml`, which calls the org's reusable `go-release.yml` to run the tests, build the binaries and `.deb`/`.rpm` packages, and then **pauses for manual approval** in the `manual-smoke-gate` environment before publishing.
+
+### Steps
+
+```bash
+git tag -a v0.5.0 -m "v0.5.0"
+git push origin v0.5.0
+```
+
+Then go to the **Actions → Release** run on GitHub, open the pending `release` job, click *Review deployments*, tick `manual-smoke-gate`, and approve. Once `release` finishes, two jobs run automatically: `aur` publishes to the AUR (one retry on transient SSH failure), and `docker` builds and pushes the image to `ghcr.io`. Both are gated behind the same approval — `docker` depends on `release` via `needs`, and `aur` runs from the same job.
+
+### What the release produces
+
+| Artifact | Platforms |
+|---|---|
+| `.tar.gz` binaries | linux/amd64, linux/arm64, darwin/amd64, darwin/arm64 |
+| `.zip` binary | windows/amd64 |
+| `.deb` package | linux/amd64, linux/arm64 |
+| `.rpm` package | linux/amd64, linux/arm64 |
+| AUR `msd` package | auto-published after release |
+| Docker image (`ghcr.io/anastylosis/msd`) | linux/amd64, linux/arm64 |
+
+The `.deb`/`.rpm` packages are built by [nfpm](https://nfpm.goreleaser.com/) from `nfpm.yaml`. The AUR package is built from `packaging/aur/PKGBUILD`, with `pkgver` stamped from the tag before publishing.
+
+The release does not currently open a linked GitHub Discussion — no `discussion-category` is configured on the reusable workflow call.
+
+### Approver checklist
+
+Before ticking `manual-smoke-gate` and approving:
+
+- [ ] `go test -tags=integration ./site/...` (equivalently `make smoke`) passed locally against **every** handler with a live-site suite — currently bunkr, filester, gofile, instagram, kemono, pixeldrain, turbo. CI cannot run these: they fetch live sites and are excluded from CI (`ci.yml` only vets the `integration` build tag, it does not run it).
+- [ ] Any handler whose site changed markup this cycle was re-checked by hand.
+- [ ] Release notes accurately describe the user-visible changes.
+
+The gate is a **trust-me** check — nothing verifies that you actually ran the suite. Its only job is to force a pause-and-think before a release goes public.
