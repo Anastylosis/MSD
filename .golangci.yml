@@ -1,0 +1,93 @@
+version: "2"
+
+linters:
+  default: standard
+  enable:
+    - bodyclose
+    - copyloopvar
+    - errorlint
+    - gocyclo
+    - misspell
+    - revive
+
+  settings:
+    revive:
+      rules:
+        - name: blank-imports
+        - name: context-as-argument
+        - name: context-keys-type
+        - name: dot-imports
+        - name: empty-block
+        - name: error-naming
+        - name: error-return
+        - name: error-strings
+        - name: errorf
+        - name: exported
+          # A stuttering rename in a package other modules import is a breaking
+          # change, so the check stays off rather than inviting one.
+          arguments:
+            - disableStutteringCheck
+        - name: increment-decrement
+        - name: indent-error-flow
+        - name: package-comments
+        - name: range
+        - name: receiver-naming
+        - name: redefines-builtin-id
+        - name: superfluous-else
+        - name: time-naming
+        - name: unexported-return
+        - name: unreachable-code
+        - name: unused-parameter
+        - name: var-declaration
+        - name: var-naming
+
+  exclusions:
+    rules:
+      # godoc comments only matter for code other modules can import. MSD is
+      # an application, not a library: internal/ is unimportable by
+      # definition, and site/* holds ~10 site handlers that all implement the
+      # same Site interface — documenting each identically would be pure
+      # churn, not signal.
+      - path: internal/
+        linters:
+          - revive
+        text: '^(exported|package-comments):'
+      - path: site/
+        linters:
+          - revive
+        text: '^(exported|package-comments):'
+
+      # temporary: file has uncommitted maintainer edits, revisit
+      - path: cmd/msd/progress\.go
+        linters:
+          - revive
+        text: '^(redefines-builtin-id|unused-parameter):'
+
+      # temporary: file has uncommitted maintainer edits, revisit
+      - path: engine/download\.go
+        linters:
+          - revive
+        text: '^package-comments:'
+
+      # temporary: file has uncommitted maintainer edits, revisit
+      - path: engine/retry\.go
+        linters:
+          - revive
+        text: '^exported:'
+
+      # temporary: file has uncommitted maintainer edits, revisit
+      - path: site/bunkr/bunkr_test\.go
+        linters:
+          - revive
+        text: '^unused-parameter:'
+
+      # temporary: file has uncommitted maintainer edits, revisit
+      - path: engine/download_host_test\.go
+        linters:
+          - revive
+        text: '^unused-parameter:'
+
+formatters:
+  enable:
+    - gofmt
+    - goimports

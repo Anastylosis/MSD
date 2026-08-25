@@ -1,3 +1,4 @@
+// Command msd is a CLI downloader for supported file-hosting and gallery sites.
 package main
 
 import (

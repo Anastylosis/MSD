@@ -83,7 +83,7 @@ func TestResolve(t *testing.T) {
 }
 
 func TestResolve_NotFoundErrorBody(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		if err := json.NewEncoder(w).Encode(fileInfo{Error: "File not found"}); err != nil {
 			t.Fatalf("encode response: %v", err)
 		}
@@ -101,7 +101,7 @@ func TestResolve_NotFoundErrorBody(t *testing.T) {
 }
 
 func TestResolve_RateLimited(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusTooManyRequests)
 	}))
 	defer ts.Close()
@@ -159,7 +159,7 @@ func TestDownloadRequest(t *testing.T) {
 }
 
 func TestDownloadRequest_NotFoundErrorBody(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		if err := json.NewEncoder(w).Encode(authResponse{Error: "Failed to generate signed URL"}); err != nil {
 			t.Fatalf("encode response: %v", err)
 		}
@@ -177,7 +177,7 @@ func TestDownloadRequest_NotFoundErrorBody(t *testing.T) {
 }
 
 func TestDownloadRequest_SiteChanged(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		if err := json.NewEncoder(w).Encode(authResponse{}); err != nil {
 			t.Fatalf("encode response: %v", err)
 		}

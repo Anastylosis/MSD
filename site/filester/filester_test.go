@@ -157,7 +157,7 @@ func TestResolve_Empty(t *testing.T) {
 }
 
 func TestResolve_NotFound(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}))
 	defer ts.Close()
@@ -170,7 +170,7 @@ func TestResolve_NotFound(t *testing.T) {
 }
 
 func TestResolve_RateLimited(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusTooManyRequests)
 	}))
 	defer ts.Close()
@@ -239,7 +239,7 @@ func TestDownloadRequest(t *testing.T) {
 }
 
 func TestDownloadRequest_APIError(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		if err := json.NewEncoder(w).Encode(map[string]any{
 			"success": false,
 		}); err != nil {
@@ -256,7 +256,7 @@ func TestDownloadRequest_APIError(t *testing.T) {
 }
 
 func TestDownloadRequest_RateLimited(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusTooManyRequests)
 	}))
 	defer ts.Close()

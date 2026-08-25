@@ -120,7 +120,7 @@ func TestResolve_Folder(t *testing.T) {
 }
 
 func TestResolve_NotFound(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		if err := json.NewEncoder(w).Encode(contentsResponse{Status: "error-notFound"}); err != nil {
 			t.Fatalf("encode response: %v", err)
 		}
@@ -138,7 +138,7 @@ func TestResolve_NotFound(t *testing.T) {
 }
 
 func TestResolve_PasswordRequired(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		if err := json.NewEncoder(w).Encode(contentsResponse{Status: "error-passwordRequired"}); err != nil {
 			t.Fatalf("encode response: %v", err)
 		}
@@ -198,7 +198,7 @@ func TestResolve_WithPassword(t *testing.T) {
 }
 
 func TestResolve_RateLimited(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusTooManyRequests)
 	}))
 	defer ts.Close()
@@ -214,7 +214,7 @@ func TestResolve_RateLimited(t *testing.T) {
 }
 
 func TestResolve_NotPremiumIsAuthRequired(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		if err := json.NewEncoder(w).Encode(contentsResponse{Status: "error-notPremium"}); err != nil {
 			t.Fatalf("encode response: %v", err)
 		}

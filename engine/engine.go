@@ -19,6 +19,8 @@ import (
 	"github.com/Anastylosis/MSD/site"
 )
 
+// Engine downloads an album's files to disk, applying concurrency, rate
+// limiting, and retry policy from its fields.
 type Engine struct {
 	OutputDir     string
 	Concurrency   int
@@ -44,6 +46,8 @@ func (e *Engine) progress() ProgressReporter {
 	return NoopReporter{}
 }
 
+// Download fetches every file in album using s, writing them under
+// e.OutputDir and reporting progress via e.Progress.
 func (e *Engine) Download(ctx context.Context, s site.Site, album *site.Album) error {
 	dir := e.OutputDir
 	if album.Name != "" {

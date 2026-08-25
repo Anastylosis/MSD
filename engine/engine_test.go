@@ -99,7 +99,7 @@ func TestEngine_Download_BasicAlbum(t *testing.T) {
 func TestEngine_Download_ConcurrencyLimit(t *testing.T) {
 	var concurrent, maxConcurrent atomic.Int32
 
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		cur := concurrent.Add(1)
 		for {
 			prev := maxConcurrent.Load()
@@ -145,7 +145,7 @@ func TestEngine_Download_ConcurrencyLimit(t *testing.T) {
 func TestEngine_Download_UsesSiteDefaultConcurrency(t *testing.T) {
 	var concurrent, maxConcurrent atomic.Int32
 
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		cur := concurrent.Add(1)
 		for {
 			prev := maxConcurrent.Load()
@@ -283,7 +283,7 @@ func TestEngine_Download_PartialFailure(t *testing.T) {
 }
 
 func TestEngine_Download_ContextCancellation(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		time.Sleep(5 * time.Second)
 		_, _ = w.Write([]byte("slow"))
 	}))

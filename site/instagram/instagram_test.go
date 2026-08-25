@@ -238,7 +238,7 @@ func TestResolve_Reel(t *testing.T) {
 }
 
 func TestResolve_PrivateProfile(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		writeJSON(t, w, map[string]any{
 			"status": "ok",
 			"data": map[string]any{

@@ -44,25 +44,25 @@ func SanitizePath(name string) string {
 	return SanitizeName(name)
 }
 
-func truncateToBytes(s string, max int) string {
-	if len(s) <= max {
+func truncateToBytes(s string, maxBytes int) string {
+	if len(s) <= maxBytes {
 		return s
 	}
 	ext := filepath.Ext(s)
-	if len(ext) > 0 && len(ext) < max-10 {
+	if len(ext) > 0 && len(ext) < maxBytes-10 {
 		base := s[:len(s)-len(ext)]
-		base = truncateUTF8(base, max-len(ext))
+		base = truncateUTF8(base, maxBytes-len(ext))
 		return base + ext
 	}
-	return truncateUTF8(s, max)
+	return truncateUTF8(s, maxBytes)
 }
 
-func truncateUTF8(s string, max int) string {
-	if len(s) <= max {
+func truncateUTF8(s string, maxBytes int) string {
+	if len(s) <= maxBytes {
 		return s
 	}
-	for max > 0 && !utf8.RuneStart(s[max]) {
-		max--
+	for maxBytes > 0 && !utf8.RuneStart(s[maxBytes]) {
+		maxBytes--
 	}
-	return s[:max]
+	return s[:maxBytes]
 }

@@ -83,7 +83,7 @@ func TestResolveAlbum(t *testing.T) {
 }
 
 func TestResolveAlbum_Empty(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		_, _ = w.Write([]byte("<html><body><h1>Empty</h1></body></html>"))
 	}))
 	defer ts.Close()
@@ -99,7 +99,7 @@ func TestResolveAlbum_Empty(t *testing.T) {
 }
 
 func TestResolveAlbum_RateLimited(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusTooManyRequests)
 	}))
 	defer ts.Close()
