@@ -87,7 +87,7 @@ Then go to the **Actions → Release** run on GitHub, open the pending `release`
 
 The `.deb`/`.rpm` packages are built by [nfpm](https://nfpm.goreleaser.com/) from `nfpm.yaml`. The AUR package is built from `packaging/aur/PKGBUILD`, with `pkgver` stamped from the tag before publishing.
 
-The release does not currently open a linked GitHub Discussion — no `discussion-category` is configured on the reusable workflow call.
+The release also opens a linked GitHub Discussion in the **Announcements** category, seeded with the release body (`discussion-category` on the reusable workflow call; the category must exist or the release fails after the gate).
 
 ### Approver checklist
 

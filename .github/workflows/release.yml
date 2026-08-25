@@ -31,6 +31,9 @@ jobs:
       aur-commit-email: wasylq@protonmail.com
       environment-name: manual-smoke-gate
       environment-url: https://github.com/Anastylosis/MSD/blob/master/CONTRIBUTING.md#cutting-a-release
+      # The category must already exist; renaming it on GitHub without changing
+      # it here fails the API call after the gate has been approved.
+      discussion-category: Announcements
       pre-release-checklist: |
         - [ ] `go test -tags=integration ./site/...` passed locally — **EVERY**
               site handler, not just the one you changed. CI cannot run these:
