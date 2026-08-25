@@ -30,7 +30,7 @@ jobs:
       aur-commit-username: Wasylq
       aur-commit-email: wasylq@protonmail.com
       environment-name: manual-smoke-gate
-      environment-url: https://github.com/Anastylosis/MSD/blob/master/CONTRIBUTING.md#cutting-a-release
+      environment-url: https://github.com/Anastylosis/MSD/blob/master/CONTRIBUTING.md#approver-checklist
       # The category must already exist; renaming it on GitHub without changing
       # it here fails the API call after the gate has been approved.
       discussion-category: Announcements
