@@ -27,6 +27,7 @@ jobs:
       binary-name: msd
       main-package: ./cmd/msd
       vet-integration-tag: true
+      check-aur-srcinfo: true
       check-dockerfile-go-version: true
       # Every package here is a scraper, so the failure that matters most is a
       # unit test quietly fetching the live site and grading real markup

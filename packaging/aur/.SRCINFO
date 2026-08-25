@@ -1,0 +1,14 @@
+pkgbase = msd
+	pkgdesc = Multi Site Downloader - download albums from file-hosting sites
+	pkgver = VERSION
+	pkgrel = 1
+	url = https://github.com/Anastylosis/MSD
+	arch = x86_64
+	arch = aarch64
+	license = GPL-3.0-only
+	makedepends = go>=1.26
+	depends = glibc
+	source = msd-VERSION.tar.gz::https://github.com/Anastylosis/MSD/archive/vVERSION.tar.gz
+	sha256sums = SKIP
+
+pkgname = msd
